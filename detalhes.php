@@ -78,7 +78,7 @@ session_start();?>
 				if (!$banco->query($q)) {
 					echo "Falhou ! $banco->error";
 				} else {
-					echo "Pedido Adicionado";
+					
 				}
 				if (!$busca) {
 					echo "Falhou! $banco->error";
@@ -98,20 +98,17 @@ session_start();?>
 				}
 				
 				switch ($add) {
-					case "add":
-					
-						  				
+					case "add":				  				
 						$b = " INSERT INTO `" . $_SESSION['user'] . "` (`cod`, `nome`)
 						VALUES (" . $_SESSION['codp'] . ", '" . $_SESSION['nomep'] . "')";
 						$ba = $banco->query($b);
-						echo " INSERT INTO `".$usuario."` (`cod`, `nome`)
-						VALUES (" . $_SESSION['codp'] . ", '" . $_SESSION['nomep'] . "')";
+						echo "Pedido Nº: " . $_SESSION['codp'] . " Adicionado";
 						
 						break;
 					case "ex":
 						$c = " DELETE FROM `" . $_SESSION['user'] . "` WHERE `cod` = " . $_SESSION['codp'] . "";
-						echo " DELETE FROM `" . $_SESSION['user'] . "` WHERE " . $_SESSION['codp'] . "";
 						$ca = $banco->query($c);
+						echo "Pedido Nº: " . $_SESSION['codp'] . " Excluido";
 						break;
 					
 

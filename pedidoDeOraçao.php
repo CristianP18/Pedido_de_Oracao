@@ -68,23 +68,27 @@ session_start();?>
     
 	<div id="nav">
 		<form method="get" action="pedidoDeOraçao.php">
-		<p class= "pequeno"> Ordenar: <a href="pedidoDeOraçao.php?o=n">Nome |</a> <a href="pedidoDeOraçao.php?o=d">Urgência |</a> <a href="pedidoDeOraçao.php?o=n1">+ Antigos | </a> <a href="pedidoDeOraçao.php?o=n2">+ Recentes |</a> Buscar:<input type="text" name="c" size="10" maxlength="40"/><input type="submit" value="Ok"/></p></div>
+		<p class= "pequeno"> Ordenar: <a href="pedidoDeOraçao.php?o=n">Nome |</a> <a href="pedidoDeOraçao.php?o=d">Meus Pedidos | </a> <a href="pedidoDeOraçao.php?o=n1">Todos | </a> <a href="pedidoDeOraçao.php?o=n2">Novos |</a> Buscar:<input type="text" name="c" size="10" maxlength="40"/><input type="submit" value="Ok"/></p></div>
 		</form>
 		<table class="listagem">
 			<?php
+			    $n = "SELECT * FROM `" . $_SESSION['user'] . "` ";
+				$novo = $banco->query($n);
+				$novo1 = $novo->fetch_object();
+				$cod = $novo1->cod;
 				$q = "SELECT * from pedidos ";
 				if (!empty($chave)) {
 					$q .= " WHERE nome like '%$chave%' OR urgencia like '%$chave%' OR pedido like '%$chave%'";
 				}
 				switch ($ordem) {
 					case "d":
-						$q .= " ORDER BY urgencia";
+						$q = "SELECT * FROM `" . $_SESSION['user'] . "` ";
 						break;
 					case "n2":
-						$q .= " ORDER BY cod DESC";
+						$q .= " WHERE cod != '$cod' ORDER BY cod DESC";
 						break;
 					case "n1":
-						$q .= " ORDER BY cod ASC";
+						$q .= " ORDER BY cod DESC";
 						break;
 					case "n":
 						$q .= " ORDER BY nome";
