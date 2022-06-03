@@ -53,14 +53,33 @@ session_start();?>
     require_once "includes/funcoes.php";
     require_once "includes/banco.php";
     require_once "includes/login.php";
+	$add = $_GET['a'] ?? "";
     ?>
     <div id="body">
     <?php include "topo.php"; ?>
+	    <form method="GET" action="detalhes.php">
+			<p class= "pequeno"><a href="detalhes.php?a=add"> Adicionar </a> <a href="detalhes.php?a=ex">Excluir</a>
+		</form>
     <table class="detalhes">
 			<?php
+			
 				$cod = $_GET['cod'] ?? 0;
+				$usuario = $_SESSION['user'];
 				$q = "SELECT * FROM pedidos WHERE cod = '$cod'";
+				$f = " CREATE TABLE `".$_SESSION['user']."` (
+					`cod` int(10) NOT NULL,
+					`nome` varchar(40) NOT NULL
+				  ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+				$fa = $banco->query($f);
 				$busca = $banco->query($q);
+				
+			
+				
+				if (!$banco->query($q)) {
+					echo "Falhou ! $banco->error";
+				} else {
+					echo "Pedido Adicionado";
+				}
 				if (!$busca) {
 					echo "Falhou! $banco->error";
 				} else {
@@ -71,9 +90,31 @@ session_start();?>
 						echo "<td><h1>Nome: <span id='nome'>$reg->nome</span></h1>";
 						echo "Pedido Numero: $reg->cod ";
 						echo "<tr><td><span id='pedido'>$reg->pedido</span>";
+						$_SESSION['nomep'] = $reg->nome;
+				        $_SESSION['codp'] = $reg->cod;
 					} else {
-						echo "<p>Jogo não encontrado</p>";
+						echo "<p Pedido não encontrado</p>";
 					}		
+				}
+				
+				switch ($add) {
+					case "add":
+					
+						  				
+						$b = " INSERT INTO `" . $_SESSION['user'] . "` (`cod`, `nome`)
+						VALUES (" . $_SESSION['codp'] . ", '" . $_SESSION['nomep'] . "')";
+						$ba = $banco->query($b);
+						echo " INSERT INTO `".$usuario."` (`cod`, `nome`)
+						VALUES (" . $_SESSION['codp'] . ", '" . $_SESSION['nomep'] . "')";
+						
+						break;
+					case "ex":
+						$c = " DELETE FROM `" . $_SESSION['user'] . "` WHERE `cod` = " . $_SESSION['codp'] . "";
+						echo " DELETE FROM `" . $_SESSION['user'] . "` WHERE " . $_SESSION['codp'] . "";
+						$ca = $banco->query($c);
+						break;
+					
+
 				}
 			?>
 			</table>
@@ -108,4 +149,4 @@ session_start();?>
 	<script src="js/main.js"></script>
 
 </body>
-</html>
+</html>#INSERT INTO `kerolin`(`id`, `cod`, `nome`) VALUES (1, 25,'testando mysqli')

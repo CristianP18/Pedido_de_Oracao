@@ -7,7 +7,7 @@
             return $caminho;
         }}
         function voltar() {
-            return "<a href='index.html'><span class='material-symbols-outlined'>
+            return "<a href='index.php'><span class='material-symbols-outlined'>
             arrow_back_ios </span></a>";
             echo "Voltar";
             

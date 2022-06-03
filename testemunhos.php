@@ -28,10 +28,10 @@ session_start();?>
 </head>
 <style>
     a {
-        font-size: 38px;
+        font-size: 26px;
     }
     div#body {
-        font-size: 46px;
+        font-size: 36px;
         font-family: Arial, Helvetica, sans-serif;
     }
     span#nome {
@@ -60,9 +60,9 @@ session_start();?>
         
        
         # Mostrar jogo
-        echo " <span id='nome'><td>Nome: $reg->nome </span>| <td>Numero: $reg->cod<br>";
-        echo "<td>Testemunho: <br><tr><td>$reg->testemunho<br>";
-        echo "_________________________________________";
+        echo " <span id='nome'><td>Nome: $reg->nome </span>| <br><td>Numero: $reg->cod<br>";
+        echo "<td>Testemunho: <br>tr<td>$reg->testemunho<br>";
+        echo "   _________<br>";
     
     }
     ?>

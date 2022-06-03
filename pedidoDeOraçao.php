@@ -32,16 +32,14 @@ session_start();?>
 		text-align: left;
 	}
 	span.titulo {
+		text-align: left;
 		color: rgba(252, 252, 17, 0.87);
 		
 	}
 	a {
-        font-size: 46px;
+        font-size: 26px;
     }
-    div#body {
-        font-size: 46px;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+   
 	body {
 		font-size: 36px;
 	}
@@ -60,6 +58,7 @@ session_start();?>
 
     $ordem = $_GET['o'] ?? "nome";
     $chave = $_GET['c'] ?? "";
+	
     ?>
     <div>
 	<?php
@@ -87,9 +86,13 @@ session_start();?>
 					case "n1":
 						$q .= " ORDER BY cod ASC";
 						break;
-					default:
+					case "n":
 						$q .= " ORDER BY nome";
 						break;
+					default:
+						$q .= " ORDER BY cod DESC";
+						break;
+
 				}
 				
 				$busca = $banco->query($q);
@@ -100,14 +103,14 @@ session_start();?>
 					if ($busca->num_rows > 0) {
 						while($reg = $busca->fetch_object()){
 							# Carregar thumb
-							echo "<tr><td>";
+							
 							$thumb = thumb($reg->capa);
 							# echo "<img src='$thumb' class='mini'/>";
 							# Mostrar jogo
 							echo "<tr><td><a href='detalhes.php?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
-							echo text("<br><tr><td>Classe: $reg->urgencia <br> Numero: $reg->cod");
+							echo text("<tr><td>Classe: $reg->urgencia <br> Numero: $reg->cod");
 							if (is_admin()) {
-								echo "<td><span class='material-symbols-outlined'>
+								echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
 								add_circle</span></a>";
 								echo "<span class='material-symbols-outlined'>
 								edit </span></a>";

@@ -81,7 +81,7 @@ H1 {
 	font-family: 'Courier New', Courier, monospace;
 	
     position: relative;
-    text-align: center;
+    text-align: left;
 	margin: auto;
 }
 h2 {
@@ -117,27 +117,33 @@ div.error {
 	background-color: rgb(250, 249, 243);
 	color:rgba(247, 10, 2, 0.486);
 }
-table.listagem td {
-
-	padding: 5px;
+.mainmenubtn {
+    background-color: skyblue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding:20px;
+    margin-top:20px;
+}
+.mainmenubtn:hover {
+    background-color: blue;
+    }
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-child {
+    display: none;
+    background-color: skyblue;
+    min-width: 200px;
+}
+.dropdown-child a {
+    color: blue;
+    padding: 20px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown:hover .dropdown-child {
+    display: block;
 }
 
-table.listagem tr:nth-child(even) {
-	background-color: #f2f2f2;
-}
-
-table.listagem td:nth-child(1) {
-	width: 50px;
-	text-align: center;
-}
-
-table.listagem td:nth-child(3) {
-	width: 90px;
-	text-align: right;
-}
-
-table.detalhes td {
-	vertical-align:top;
-	padding: 20px;
-	
-}
