@@ -58,7 +58,9 @@ session_start();?>
     <div id="body">
     <?php include "topo.php"; ?>
 	    <form method="GET" action="detalhes.php">
-			<p class= "pequeno"><a href="detalhes.php?a=add"> Adicionar </a> <a href="detalhes.php?a=ex">Excluir</a>
+			<p class= "pequeno"><a href="detalhes.php?a=add"> <span class='material-symbols-outlined'>
+								add_circle</span> Adicionar | </a> <a href="detalhes.php?a=ex"><span class='material-symbols-outlined'>
+								delete </span> Excluir</a>
 		</form>
     <table class="detalhes">
 			<?php
@@ -92,16 +94,31 @@ session_start();?>
 						echo "<tr><td><span id='pedido'>$reg->pedido</span>";
 						$_SESSION['nomep'] = $reg->nome;
 				        $_SESSION['codp'] = $reg->cod;
+						$a = " CREATE TABLE pedido".$_SESSION['codp']." (
+							`nome` varchar(40) NOT NULL,
+							`data` datetime NOT NULL
+						  ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+					
 					} else {
 						echo "<p Pedido não encontrado</p>";
 					}		
 				}
 				
+				$n = "SELECT * FROM `pedido".$_SESSION['codp']."`";
+				$aa = $banco->query($a);
+				$n1 = $banco->query($n);
+				$_SESSION['nomec'] = $n1->nome;
+				echo "...".$_SESSION['nomec']."...";
 				switch ($add) {
 					case "add":				  				
-						$b = " INSERT INTO `" . $_SESSION['user'] . "` (`cod`, `nome`)
+						$b = " INSERT INTO `" . $_SESSION['user'] . "` ( `cod`, `nome`)
 						VALUES (" . $_SESSION['codp'] . ", '" . $_SESSION['nomep'] . "')";
+						$c = " UPDATE `pedidos` SET `ok`= 1 WHERE `cod` = '" . $_SESSION['codp'] . "'";
+						$a = " INSERT INTO `pedido".$_SESSION['codp']."` (`nome`, `data`) VALUES ('" . $_SESSION['user'] . "', NOW())";
+
+						$ca = $banco->query($c);
 						$ba = $banco->query($b);
+						$aa = $banco->query($a);
 						echo "Pedido Nº: " . $_SESSION['codp'] . " Adicionado";
 						
 						break;

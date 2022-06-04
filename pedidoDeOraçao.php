@@ -68,24 +68,25 @@ session_start();?>
     
 	<div id="nav">
 		<form method="get" action="pedidoDeOraçao.php">
-		<p class= "pequeno"> Ordenar: <a href="pedidoDeOraçao.php?o=n">Nome |</a> <a href="pedidoDeOraçao.php?o=d">Meus Pedidos | </a> <a href="pedidoDeOraçao.php?o=n1">Todos | </a> <a href="pedidoDeOraçao.php?o=n2">Novos |</a> Buscar:<input type="text" name="c" size="10" maxlength="40"/><input type="submit" value="Ok"/></p></div>
+		<p class= "pequeno"> Ordenar: <a href="pedidoDeOraçao.php?o=n2">Novos |</a> <a href="pedidoDeOraçao.php?o=d">Meus Pedidos | </a> <a href="pedidoDeOraçao.php?o=n">Nome |</a>  <a href="pedidoDeOraçao.php?o=n1">Todos | </a>  Buscar:<input type="text" name="c" size="10" maxlength="40"/><input type="submit" value="Ok"/></p></div>
 		</form>
 		<table class="listagem">
 			<?php
+			    
 			    $n = "SELECT * FROM `" . $_SESSION['user'] . "` ";
 				$novo = $banco->query($n);
-				$novo1 = $novo->fetch_object();
-				$cod = $novo1->cod;
+				$novo1 = $novo->fetch_object();				
+				$_SESSION['codb'] = $novo1->cod;
 				$q = "SELECT * from pedidos ";
 				if (!empty($chave)) {
 					$q .= " WHERE nome like '%$chave%' OR urgencia like '%$chave%' OR pedido like '%$chave%'";
 				}
 				switch ($ordem) {
 					case "d":
-						$q = "SELECT * FROM `" . $_SESSION['user'] . "` ";
+						$q = "SELECT * FROM `" . $_SESSION['user'] . "` ORDER BY cod DESC";
 						break;
 					case "n2":
-						$q .= " WHERE cod != '$cod' ORDER BY cod DESC";
+						$q .= " WHERE ok = 0 ORDER BY cod DESC";
 						break;
 					case "n1":
 						$q .= " ORDER BY cod DESC";
@@ -95,6 +96,8 @@ session_start();?>
 						break;
 					default:
 						$q .= " ORDER BY cod DESC";
+						
+						
 						break;
 
 				}
@@ -107,21 +110,22 @@ session_start();?>
 					if ($busca->num_rows > 0) {
 						while($reg = $busca->fetch_object()){
 							# Carregar thumb
-							
+							$_SESSION['nomep'] = $reg->nome;
+							$_SESSION['codp'] = $reg->cod;
 							$thumb = thumb($reg->capa);
 							# echo "<img src='$thumb' class='mini'/>";
 							# Mostrar jogo
 							echo "<tr><td><a href='detalhes.php?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
-							echo text("<tr><td>Classe: $reg->urgencia <br> Numero: $reg->cod");
+							echo text("<tr><td>Classe: $reg->urgencia <br> Numero: $reg->cod <br> $reg->data");
 							if (is_admin()) {
-								echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
+								/*echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
 								add_circle</span></a>";
-								echo "<span class='material-symbols-outlined'>
+								#echo "<span class='material-symbols-outlined'>
 								edit </span></a>";
 								echo "<span class='material-symbols-outlined'>
-								delete </span></a>";
+								delete </span></a>";*/
 							}elseif (is_editor()) {
-								echo "<td>Alterar";
+								#echo "<td>Alterar";
 							}
 						}
 					} else {

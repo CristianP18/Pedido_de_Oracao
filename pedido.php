@@ -67,7 +67,7 @@ require_once "includes/login.php";
      <?php 
     echo msg_sucesso("A Paz do Senhor:" . $nome);
    
-        $q = "INSERT INTO `pedidos`( `nome`, `urgencia`, `pedido`) VALUES ('$nome','$urgencia', '$pedido') ";
+        $q = "INSERT INTO `pedidos`( `nome`, `urgencia`, `ok`, `pedido`, `data`) VALUES ('$nome','$urgencia', 0, '$pedido', NOW())";
         $busca = $banco->query($q);
         echo "Pedido de Oração Enviado!";
         echo "<a href='index.html'>Voltar</a>";

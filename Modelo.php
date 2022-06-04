@@ -28,3 +28,4 @@
 
 <textarea rows="10" cols="40" maxlength="500"></textarea>
 INSERT INTO `pedidos`( `nome`, `urgencia`, `pedido`) VALUES ('ana','urgente', 'pedido de oraçao');
+UPDATE `pedidos` SET `ok`= 2 WHERE `cod` = '" .  . "';
