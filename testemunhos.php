@@ -55,13 +55,13 @@ session_start();?>
     $busca = $banco->query($q);
     $busca->fetch_object();
     while($reg = $busca->fetch_object()){
-        # Carregar thumb
+        
         echo "<tr><td>";
         
        
-        # Mostrar jogo
+        
         echo " <span id='nome'><td>Nome: $reg->nome </span>| <br><td>Numero: $reg->cod<br>";
-        echo "<td>Testemunho: <br>tr<td>$reg->testemunho<br>";
+        echo "<td>Testemunho: <br><tr><td>$reg->testemunho<br>";
         echo "   _________<br>";
     
     }

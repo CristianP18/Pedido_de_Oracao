@@ -78,6 +78,7 @@ session_start();?>
 				$novo1 = $novo->fetch_object();				
 				$_SESSION['codb'] = $novo1->cod;
 				$q = "SELECT * from pedidos ";
+
 				if (!empty($chave)) {
 					$q .= " WHERE nome like '%$chave%' OR urgencia like '%$chave%' OR pedido like '%$chave%'";
 				}
@@ -97,7 +98,6 @@ session_start();?>
 					default:
 						$q .= " ORDER BY cod DESC";
 						
-						
 						break;
 
 				}
@@ -109,14 +109,18 @@ session_start();?>
 				
 					if ($busca->num_rows > 0) {
 						while($reg = $busca->fetch_object()){
-							# Carregar thumb
+							
 							$_SESSION['nomep'] = $reg->nome;
 							$_SESSION['codp'] = $reg->cod;
 							$thumb = thumb($reg->capa);
-							# echo "<img src='$thumb' class='mini'/>";
-							# Mostrar jogo
+	
 							echo "<tr><td><a href='detalhes.php?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
 							echo text("<tr><td>Classe: $reg->urgencia <br> Numero: $reg->cod <br> $reg->data");
+							$s = "SELECT count(`nome`) as total FROM `pedido".$_SESSION['codp']."`";
+							$s1 = $banco->query($s);
+							$n = $s1->fetch_array();
+							echo "<br> Numero de Pessoas que Orarão ou estão Orando por esse Pedido: ";
+							echo $n["total"];
 							if (is_admin()) {
 								/*echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
 								add_circle</span></a>";

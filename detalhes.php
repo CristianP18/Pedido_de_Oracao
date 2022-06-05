@@ -80,7 +80,7 @@ session_start();?>
 				if (!$banco->query($q)) {
 					echo "Falhou ! $banco->error";
 				} else {
-					
+						
 				}
 				if (!$busca) {
 					echo "Falhou! $banco->error";
@@ -94,16 +94,23 @@ session_start();?>
 						echo "<tr><td><span id='pedido'>$reg->pedido</span>";
 						$_SESSION['nomep'] = $reg->nome;
 				        $_SESSION['codp'] = $reg->cod;
+						$s = "SELECT count(`nome`) as total FROM `pedido".$_SESSION['codp']."`";
+						$s1 = $banco->query($s);
+						$n = $s1->fetch_array();
+				        echo "<br> Numero de Pessoas que Orarão ou estão Orando por esse Pedido: ";
+						echo $n["total"];
+						
+
 						$a = " CREATE TABLE pedido".$_SESSION['codp']." (
 							`nome` varchar(40) NOT NULL,
 							`data` datetime NOT NULL
 						  ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
-					
+						
 					} else {
 						echo "<p Pedido não encontrado</p>";
 					}		
 				}
-				
+			
 				$n = "SELECT * FROM `pedido".$_SESSION['codp']."`";
 				$aa = $banco->query($a);
 				$n1 = $banco->query($n);
@@ -132,7 +139,7 @@ session_start();?>
 				}
 			?>
 			</table>
-    
+		
 
     </div>
     <?php 
@@ -163,4 +170,4 @@ session_start();?>
 	<script src="js/main.js"></script>
 
 </body>
-</html>#INSERT INTO `kerolin`(`id`, `cod`, `nome`) VALUES (1, 25,'testando mysqli')
+</html>
