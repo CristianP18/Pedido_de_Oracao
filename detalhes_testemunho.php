@@ -3,11 +3,11 @@ session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="includes/style.css"/>
+    
     <title>Pedido de Oração!</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -28,123 +28,62 @@ session_start();?>
 <!--===============================================================================================-->
 </head>
 <style>
-	h1 {
-		text-align: left;
-	}
-	span.titulo {
-		text-align: left;
-		color: rgba(252, 252, 17, 0.87);
-		
-	}
-	a {
-        font-size: 26px;
+    a {
+        font-size: 46px;
     }
-   
-	body {
+    div#body {
+        font-size: 46px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    span#nome {
+        font-family: Arial, Helvetica, sans-serif;
+		color: darkmagenta;
+    }
+	span#pedido {
 		font-size: 36px;
+		padding-bottom: 2px;
 	}
-
-	</style>
+</style>
 <body>
 	
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-			<h1>Pedidos de Oração</h1>
 			<?php 
     require_once "includes/funcoes.php";
     require_once "includes/banco.php";
     require_once "includes/login.php";
-
-    $ordem = $_GET['o'] ?? "nome";
-    $chave = $_GET['c'] ?? "";
-	
+	$add = $_GET['a'] ?? "";
     ?>
-    <div>
-	</div>
-    
-	<div id="nav">
-		<form method="get" action="pedidoDeOraçao.php">
-		<p class= "pequeno"> Buscar:<input type="text" name="c" size="10" maxlength="40"/><input type="submit" value="Ok"/></p></div>
-		</form>
-		<table class="listagem">
+    <div id="body">
+    <?php include "topo.php"; ?>
+    <table class="detalhes">
 			<?php
-			    
-			    
-				$q = "SELECT * from testemunhos ";
-
-				if (!empty($chave)) {
-					$q .= " WHERE nome like '%$chave%' OR urgencia like '%$chave%' OR pedido like '%$chave%'";
-				}
-				switch ($ordem) {
-					
-					default:
-						$q .= " ORDER BY cod DESC";
+			
+				$cod = $_GET['cod'] ?? 0;
+				$usuario = $_SESSION['user'];
+			
 						
-						break;
-
-				}
-				
-			    
+				$q = "SELECT * FROM testemunhos WHERE cod = '$cod'";
 				$busca = $banco->query($q);
-				if (!$busca) {
-					echo "Falhou! $banco->error";
-				} else {
-				
-					if ($busca->num_rows > 0) {
-						while($reg = $busca->fetch_object()){
-							$_SESSION['nomep'] = $reg->nome;
-							$_SESSION['codp'] = $reg->cod;
-							$validar_pedido = "`pedido".$_SESSION['codp']."`";
 
-                            $test = substr($reg->testemunho, 0, 200);
-                            echo "<tr><td><a href='detalhes_testemunho.php?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
-							echo ("<tr><td> $test ....<br> Numero: $reg->cod <br> $reg->data<br>");
-						
-						
-							if (is_admin()) {
-								/*echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
-								add_circle</span></a>";
-								#echo "<span class='material-symbols-outlined'>
-								edit </span></a>";
-								echo "<span class='material-symbols-outlined'>
-								delete </span></a>";*/
-							}elseif (is_editor()) {
-								#echo "<td>Alterar";
-							}
-						}
-						while($reg = $busca->fetch_object()){
-							$_SESSION['nomep'] = $reg->nome;
-							$_SESSION['codp'] = $reg->cod;
-							$validar_pedido = "`pedido".$_SESSION['codp']."`";
-						
-							$s = "SELECT count(`nome`) as total FROM `pedido".$_SESSION['codp']."`";
-						    $s1 = $banco->query($s);
-						    $n2 = $s1->fetch_array();
-						    echo " " . $n2["total"] ." Pessoas que Orarão ou estão Orando por esse Pedido.";
-							if (is_admin()) {
-								/*echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
-								add_circle</span></a>";
-								#echo "<span class='material-symbols-outlined'>
-								edit </span></a>";
-								echo "<span class='material-symbols-outlined'>
-								delete </span></a>";*/
-							}elseif (is_editor()) {
-								#echo "<td>Alterar";
-							}
-						}
-					} else {
-						echo "<p>Nenhum registro encontrado...</p>";
-					}						
+				if ($busca = $banco->query($q)) {
+					$reg = $busca->fetch_object();
+					echo "<tr><td><a href='#?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
+					echo text("<tr><td>$reg->testemunho <br> Numero: $reg->cod <br> $reg->data<br>");
+				}else {
+					echo "ERRO";
 				}
 				
-			?>
-		</table>
-    
+			
+				?>
+			</table>
+		
 
+    </div>
     <?php 
-  echo voltar("Voltar"); ?>
-    
+  echo voltar3("Voltar"); ?>
+    </div>
 			</div>
 		</div>
 	</div>
@@ -171,18 +110,3 @@ session_start();?>
 
 </body>
 </html>
-
-    
-
-
-
-
-
-
-
-
-
-  echo " <span id='nome'><td>Nome: $reg->nome </span>| <br><td>Numero: $reg->cod<br>";
-        echo "<td>Testemunho: <br><tr><td>$reg->testemunho<br>";
-        echo "   _________<br>";
-    

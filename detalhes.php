@@ -1,5 +1,6 @@
 <?php
-session_start();?>
+session_start();
+include "verifica.php"?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,6 +68,8 @@ session_start();?>
 			
 				$cod = $_GET['cod'] ?? 0;
 				$usuario = $_SESSION['user'];
+			
+						
 				$q = "SELECT * FROM pedidos WHERE cod = '$cod'";
 				$f = " CREATE TABLE `".$_SESSION['user']."` (
 					`cod` int(10) NOT NULL,
@@ -78,7 +81,35 @@ session_start();?>
 			
 				
 				if (!$banco->query($q)) {
-					echo "Falhou ! $banco->error";
+					echo "Falhou ! $banco->error";		
+					while($reg = $busca->fetch_object()){
+						$_SESSION['nomep'] = $reg->nome;
+						$_SESSION['codp'] = $reg->cod;
+						$validar_pedido = "`pedido".$_SESSION['codp']."`";
+
+						echo "<tr><td><a href='detalhes.php?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
+						echo text("<tr><td>Classe: $reg->urgencia <br> Numero: $reg->cod <br> $reg->data<br>");
+					
+						$s = "SELECT count(`nome`) as total FROM `pedido".$_SESSION['codp']."`";
+						$s1 = $banco->query($s);
+						$n2 = $s1->fetch_array();
+						echo " " . $n2["total"] ." Pessoas que Orarão ou estão Orando por esse Pedido.";
+						
+						
+						
+						
+						echo $n2["total"];
+						if (is_admin()) {
+							/*echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
+							add_circle</span></a>";
+							#echo "<span class='material-symbols-outlined'>
+							edit </span></a>";
+							echo "<span class='material-symbols-outlined'>
+							delete </span></a>";*/
+						}elseif (is_editor()) {
+							#echo "<td>Alterar";
+						}
+					}
 				} else {
 						
 				}
@@ -87,24 +118,23 @@ session_start();?>
 				} else {
 					if ($busca->num_rows > 0) {
 						$reg = $busca->fetch_object();
-						$thumb = thumb($reg->capa);
+						
 						# echo "<tr><td rowspan='3'><img class='grande' src='$thumb'/>";
 						echo "<td><h1>Nome: <span id='nome'>$reg->nome</span></h1>";
 						echo "Pedido Numero: $reg->cod ";
-						echo "<tr><td><span id='pedido'>$reg->pedido</span>";
+						echo "<tr><td><span id='pedido'>$reg->pedido</span><br>";
+						
+				        
 						$_SESSION['nomep'] = $reg->nome;
 				        $_SESSION['codp'] = $reg->cod;
 						$s = "SELECT count(`nome`) as total FROM `pedido".$_SESSION['codp']."`";
 						$s1 = $banco->query($s);
-						$n = $s1->fetch_array();
-				        echo "<br> Numero de Pessoas que Orarão ou estão Orando por esse Pedido: ";
-						echo $n["total"];
+						$n2 = $s1->fetch_array();
+						echo " " . $n2["total"] ." Pessoas que Orarão ou estão Orando por esse Pedido.";
 						
 
-						$a = " CREATE TABLE pedido".$_SESSION['codp']." (
-							`nome` varchar(40) NOT NULL,
-							`data` datetime NOT NULL
-						  ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+						
+						
 						
 					} else {
 						echo "<p Pedido não encontrado</p>";
@@ -112,12 +142,18 @@ session_start();?>
 				}
 			
 				$n = "SELECT * FROM `pedido".$_SESSION['codp']."`";
-				$aa = $banco->query($a);
+				
 				$n1 = $banco->query($n);
 				$_SESSION['nomec'] = $n1->nome;
 				echo "...".$_SESSION['nomec']."...";
 				switch ($add) {
-					case "add":				  				
+					case "add":	
+						$a = " CREATE TABLE `pedido".$_SESSION['codp']."` (
+							`nome` varchar(40) NOT NULL,
+							`data` datetime NOT NULL
+						  ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+
+						$aa = $banco->query($a);			  				
 						$b = " INSERT INTO `" . $_SESSION['user'] . "` ( `cod`, `nome`)
 						VALUES (" . $_SESSION['codp'] . ", '" . $_SESSION['nomep'] . "')";
 						$c = " UPDATE `pedidos` SET `ok`= 1 WHERE `cod` = '" . $_SESSION['codp'] . "'";
@@ -132,6 +168,8 @@ session_start();?>
 					case "ex":
 						$c = " DELETE FROM `" . $_SESSION['user'] . "` WHERE `cod` = " . $_SESSION['codp'] . "";
 						$ca = $banco->query($c);
+						$a = "DELETE FROM `pedido".$_SESSION['codp']."` WHERE `cod` = " . $_SESSION['codp'] . "";
+						$aa = $banco->query($a);
 						echo "Pedido Nº: " . $_SESSION['codp'] . " Excluido";
 						break;
 					

@@ -2,4 +2,4 @@
 session_start();
 unset($_SESSION['nome']);
 ?>
-<script>location.href='index.html';</script>
+<script>location.href='index.php';</script>

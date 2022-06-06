@@ -18,6 +18,12 @@
           
           
       }
+      function voltar3() {
+        return "<a href='testemunho.php'><span class='material-symbols-outlined'>
+        arrow_back_ios </span></a>";
+        
+        
+    }
         
       function msg_sucesso($m) {
           $resp = "<div class='sucesso'><i

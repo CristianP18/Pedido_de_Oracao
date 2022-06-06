@@ -1,5 +1,6 @@
 <?php
-session_start();?>
+session_start();
+include "verifica.php"?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,6 +103,7 @@ session_start();?>
 
 				}
 				
+			    
 				$busca = $banco->query($q);
 				if (!$busca) {
 					echo "Falhou! $banco->error";
@@ -109,18 +111,36 @@ session_start();?>
 				
 					if ($busca->num_rows > 0) {
 						while($reg = $busca->fetch_object()){
-							
 							$_SESSION['nomep'] = $reg->nome;
 							$_SESSION['codp'] = $reg->cod;
-							$thumb = thumb($reg->capa);
+							$validar_pedido = "`pedido".$_SESSION['codp']."`";
+							$test = substr($reg->pedido, 0, 200);
+							
 	
 							echo "<tr><td><a href='detalhes.php?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
-							echo text("<tr><td>Classe: $reg->urgencia <br> Numero: $reg->cod <br> $reg->data");
+							echo text("<tr><td>Classe: $test <br>$reg->urgencia <br> Numero: $reg->cod <br> $reg->data<br>");
+						
+						
+							if (is_admin()) {
+								/*echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
+								add_circle</span></a>";
+								#echo "<span class='material-symbols-outlined'>
+								edit </span></a>";
+								echo "<span class='material-symbols-outlined'>
+								delete </span></a>";*/
+							}elseif (is_editor()) {
+								#echo "<td>Alterar";
+							}
+						}
+						while($reg = $busca->fetch_object()){
+							$_SESSION['nomep'] = $reg->nome;
+							$_SESSION['codp'] = $reg->cod;
+							$validar_pedido = "`pedido".$_SESSION['codp']."`";
+						
 							$s = "SELECT count(`nome`) as total FROM `pedido".$_SESSION['codp']."`";
-							$s1 = $banco->query($s);
-							$n = $s1->fetch_array();
-							echo "<br> Numero de Pessoas que Orarão ou estão Orando por esse Pedido: ";
-							echo $n["total"];
+						    $s1 = $banco->query($s);
+						    $n2 = $s1->fetch_array();
+						    echo " " . $n2["total"] ." Pessoas que Orarão ou estão Orando por esse Pedido.";
 							if (is_admin()) {
 								/*echo "<td><a href='pedidoDeOraçao.php?o=n'><span class='material-symbols-outlined'>
 								add_circle</span></a>";
@@ -136,6 +156,7 @@ session_start();?>
 						echo "<p>Nenhum registro encontrado...</p>";
 					}						
 				}
+				
 			?>
 		</table>
     

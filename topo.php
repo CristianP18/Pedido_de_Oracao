@@ -1,5 +1,6 @@
 <?php
-session_start();?>
+session_start();
+include ('verifica.php');?>
 <style>
     a {
         color: rgba(30, 33, 199, 0.589);
@@ -41,7 +42,7 @@ require_once "includes/login.php";
 ?>
 <?php
 
-if(empty($_SESSION['user'])){
+if(!$_SESSION['user']){
     echo "<a href='user-login-form.html'>Entrar</a> ";
 }else {      
     echo "<a href='index.php'>Inicio</a>";
@@ -53,7 +54,7 @@ if(empty($_SESSION['user'])){
        
         
     }
-    echo "<a href='logout.php'>Sair</a> | "; 
+    echo "<a href='logout2.php'>Sair</a> | "; 
 }
 
 echo"</p>";

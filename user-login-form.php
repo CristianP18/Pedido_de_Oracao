@@ -1,4 +1,6 @@
-
+<?php 
+ session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,8 +31,8 @@
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="images/img-01.png" alt="IMG">
-				</div>
-
+				</div><?php
+                include "topo.php";?>
 				
 					<span class="login100-form-title">
 						Entrar
