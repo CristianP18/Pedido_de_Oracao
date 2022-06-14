@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "verifica.php"?>
+   ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +43,9 @@ include "verifica.php"?>
 	span#pedido {
 		font-size: 36px;
 		padding-bottom: 2px;
+	}
+	h3 {
+		font-size: 28px;
 	}
 </style>
 <body>
@@ -122,15 +125,16 @@ include "verifica.php"?>
 						# echo "<tr><td rowspan='3'><img class='grande' src='$thumb'/>";
 						echo "<td><h1>Nome: <span id='nome'>$reg->nome</span></h1>";
 						echo "Pedido Numero: $reg->cod ";
-						echo "<tr><td><span id='pedido'>$reg->pedido</span><br>";
-						
-				        
 						$_SESSION['nomep'] = $reg->nome;
 				        $_SESSION['codp'] = $reg->cod;
 						$s = "SELECT count(`nome`) as total FROM `pedido".$_SESSION['codp']."`";
 						$s1 = $banco->query($s);
 						$n2 = $s1->fetch_array();
-						echo " " . $n2["total"] ." Pessoas que Orarão ou estão Orando por esse Pedido.";
+						echo "<br><h3> " . $n2["total"] ." Pessoas que Orarão ou estão Orando por esse Pedido.</h3>";
+						echo " ";
+						echo "<tr><td><span id='pedido'>$reg->pedido</span><br>";
+						
+				        
 						
 
 						
@@ -145,7 +149,7 @@ include "verifica.php"?>
 				
 				$n1 = $banco->query($n);
 				$_SESSION['nomec'] = $n1->nome;
-				echo "...".$_SESSION['nomec']."...";
+				echo "".$_SESSION['nomec']."";
 				switch ($add) {
 					case "add":	
 						$a = " CREATE TABLE `pedido".$_SESSION['codp']."` (

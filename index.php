@@ -15,6 +15,23 @@ session_start();?>
    h1 {
        text-align: center;
    }
+   input#botao {
+    width: 140px;
+    max-width: 160px;
+    height:70px;
+    font-size: 28px;
+   }
+   input#nome {
+    font-size: 28px;
+    width: 140px;
+    max-width: 180px;
+    height:50px;
+   }
+   select#tipo {
+    width: 120px;
+    height:60px;
+    font-size: 22px;
+   }
 </style>
 </head>
 <body>
@@ -29,24 +46,26 @@ session_start();?>
     <div id="pedido">
         <form action="pedido.php" method="post">
         <tr><td><h2> Digite seu Pedido de Oração!</h2>
-        <tr><td><textarea name="pedido" id="pedido" size="18px" rows="8" cols="42"></textarea>
+        <tr><td><textarea name="pedido" id="pedido" size="18px" rows="12" cols="72"></textarea>
         <tr><td><h2>Nome: <td><input type="text" name="nome" id="nome" rows="3" cols="33"></h2>
         <tr><td>Urgencia: <td><select name="tipo" id="tipo">
+            <option value="urgente" >Urgente</option>
             <option value="baixa">Baixa</option>
             <option value="moderada" selected>Moderado</option>
-            <option value="urgente" selected>Urgente</option>
-        </select>
-        <tr><td><input type="submit" value="Enviar" width="30px" height="10px">
+            
+        </select><br><br>
+        <tr><td><input type="submit" value="Enviar" id="botao">
         </form>
     </div>
     
         <form action="testemunho.php" method="post">
         <div id="text"><tr><td><h2>Se você foi abençoado por Deus,<br> compartilhe seu testemunho <br>para edficação da nossa fé.</h2></div>
             <div id="testemunho">
-        <tr><td><h2>Nome: <td><input type="text" name="nome" id="nome" rows="3" cols="33"></h2>
+        
             <h2>Testemunho: </h2>
-        <tr><td><textarea type="text" class="textarea" name="testemunho" id="testemunho" size="18px" rows="9" cols="42"></textarea> </br>
-        <tr><td><input type="submit" value="Enviar" width="30px" height="10px"> 
+            <tr><td><h2>Nome: <td><input type="text" name="nome" id="nome" rows="3" cols="33"></h2>
+        <tr><td><textarea type="text" class="textarea" name="testemunho" id="testemunho" size="18px" rows="12" cols="72"></textarea> </br>
+        <tr><td><input type="submit" value="Enviar" id="botao"> 
         </form>
     </div>
     </section>

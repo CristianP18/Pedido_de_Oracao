@@ -31,11 +31,11 @@
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="images/img-01.png" alt="IMG">
-				</div><?php
+				</div>
+					<span class="login100-form-title">
+					<?php
                 include "topo.php";?>
 				
-					<span class="login100-form-title">
-						Entrar
 					</span>
                     <form action="user-login.php" method="post">
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">

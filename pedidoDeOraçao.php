@@ -118,7 +118,7 @@ include "verifica.php"?>
 							
 	
 							echo "<tr><td><a href='detalhes.php?cod=$reg->cod'><h1>Nome: <span class='titulo'>$reg->nome</span></h1></a>";
-							echo text("<tr><td>Classe: $test <br>$reg->urgencia <br> Numero: $reg->cod <br> $reg->data<br>");
+							echo text("<tr><td>Classe: $reg->urgencia<br>$test  <br> Numero: $reg->cod <br> $reg->data<br>");
 						
 						
 							if (is_admin()) {
