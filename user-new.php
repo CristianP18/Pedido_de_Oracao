@@ -64,6 +64,11 @@ require_once "includes/login.php";
                     }else {
                         $senha = gerarHash($senha1);                       
                         $q = "INSERT INTO usuarios (usuario, nome, senha, tipo) VALUES ('$usuario', '$nome', '$senha', '$tipo')";
+                        $f = " CREATE TABLE `".$_SESSION['user']."` (
+                            `cod` int(10) NOT NULL,
+                            `nome` varchar(40) NOT NULL
+                          ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+                        $fa = $banco->query($f);
                         if ($banco->query($q)) {
                             echo msg_sucesso("Usuário $nome cadastrado com sucesso!");
                         } else {

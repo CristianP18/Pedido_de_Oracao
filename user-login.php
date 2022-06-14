@@ -72,13 +72,13 @@ require_once "includes/login.php";
                      }else {
                          
                             echo msg_error('Senha inválida');
-                            echo voltar('Voltar');
+                            echo voltar4('Voltar');
                         
                      }
             
             }else {
                     echo msg_error('Usuário não existe!');
-                    echo voltar('Voltar');
+                    echo voltar4('Voltar');
                 }
                 
                 }}?>

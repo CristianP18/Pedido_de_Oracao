@@ -12,6 +12,12 @@
             echo "Voltar";
             
         }
+        function voltar4() {
+          return "<a href='user-login-form.php'><span class='material-symbols-outlined'>
+          arrow_back_ios </span></a>";
+          echo "Voltar";
+          
+      }
         function voltar2() {
           return "<a href='pedidoDeOraçao.php'><span class='material-symbols-outlined'>
           arrow_back_ios </span></a>";

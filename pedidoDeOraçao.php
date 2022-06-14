@@ -74,9 +74,7 @@ include "verifica.php"?>
 		<table class="listagem">
 			<?php
 			    
-			    $n = "SELECT * FROM `" . $_SESSION['user'] . "` ";
-				$novo = $banco->query($n);
-				$novo1 = $novo->fetch_object();				
+						
 				$_SESSION['codb'] = $novo1->cod;
 				$q = "SELECT * from pedidos ";
 
